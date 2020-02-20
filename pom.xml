@@ -1,0 +1,517 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.royasoftware</groupId>
+	<artifactId>training</artifactId>
+	<version>${appversion}</version>
+	<!-- -->
+
+	<packaging>jar</packaging>
+	<!-- <properties> <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
+		<java.version>1.8</java.version> </properties> 1.3.1.RELEASE -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.3.RELEASE</version>
+
+		<!-- <version>1.5.1.RELEASE</version> <version>2.2.0.RELEASE</version> -->
+	</parent>
+	<properties>
+		<!-- The main class to start by executing java -jar -->
+		<start-class>com.royasoftware.school.MyBootSpring</start-class>
+		<com.typesafe.akka.version>2.5.4</com.typesafe.akka.version>
+	</properties>
+	<dependencies>
+		<!-- <dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-zuul</artifactId> 
+			</dependency> -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-jdbc</artifactId>
+		    <exclusions>
+		        <exclusion>
+		            <groupId>com.zaxxer</groupId>
+		            <artifactId>HikariCP</artifactId>
+		        </exclusion>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>			
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-properties-migrator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>			
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<!-- <scope>provided</scope> -->
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>		<!-- -->
+		<!-- rabbitMQ dependencies -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+
+		<!-- <dependency> <groupId>io.projectreactor</groupId> <artifactId>reactor-net</artifactId> 
+			<version>2.0.5.RELEASE</version> </dependency> <dependency> <groupId>io.projectreactor</groupId> 
+			<artifactId>reactor-core</artifactId> <version>2.0.5.RELEASE</version> </dependency> 
+			<dependency> <groupId>io.netty</groupId> <artifactId>netty-all</artifactId> 
+			<version>4.0.33.Final</version> </dependency> -->
+		<!-- -->
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+		</dependency>
+		<!-- Flywaydb for db iterative migration -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<!--  <version>4.0.3</version>-->
+			<version>5.2.4</version>
+		</dependency>
+		<!-- Dependencies for Security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<!-- Dependencies for Security <dependency> <groupId>org.springframework.security.oauth</groupId> 
+			<artifactId>spring-security-oauth2</artifactId> </dependency> -->
+		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+			<version>2.2.0.RELEASE</version>
+		</dependency>
+
+		<!-- Dependencies for JPA Data Persistence -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- <dependency> <groupId>org.hsqldb</groupId> <artifactId>hsqldb</artifactId> 
+			</dependency> -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.8</version>
+			<scope>provided</scope> <!--this prevents this libto be included in build file -->
+		</dependency>
+
+		<!-- Dependencies for Guava Cache Management Support -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>23.6-jre</version>
+		</dependency>
+
+		<!-- Dependencies for Actuator Production Monitoring and Management -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- Dependencies for Unit Testing -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>8.0.18</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java 
+-->		
+	    <dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>compile</scope>
+		</dependency>
+<!--  -->		
+		<!-- https://mvnrepository.com/artifact/com.h2database/h2 
+		<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <version>1.4.200</version>
+		    <scope>compile</scope>
+		</dependency>
+		-->
+		<!-- https://mvnrepository.com/artifact/org.xmlbeam/xmlprojector -->
+		<dependency>
+		    <groupId>org.xmlbeam</groupId>
+		    <artifactId>xmlprojector</artifactId>
+		    <version>1.4.16</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.ldap/spring-ldap-core -->
+		<dependency>
+		    <groupId>org.springframework.ldap</groupId>
+		    <artifactId>spring-ldap-core</artifactId>
+		    <version>2.3.2.RELEASE</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-ldap -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-ldap</artifactId>
+		    <version>5.2.0.RELEASE</version>
+		</dependency>
+
+		<!-- Views Dependencies -->
+		<!-- <dependency> <groupId>javax.servlet</groupId> <artifactId>jstl</artifactId> 
+			</dependency> -->
+		<!-- <dependency> <groupId>javax.servlet</groupId> <artifactId>javax.servlet-api</artifactId> 
+			<version>3.1.0</version> <scope>provided</scope> </dependency> -->
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-tomcat</artifactId> 
+			<scope>provided</scope> </dependency> <dependency> <groupId>org.apache.tomcat.embed</groupId> 
+			<artifactId>tomcat-embed-jasper</artifactId> <scope>provided</scope> </dependency> -->
+		<!-- Email -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jdbc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-websocket</artifactId> 
+			</dependency> -->
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path</artifactId>
+			<version>0.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path-assert</artifactId>
+			<version>0.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-jwt -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-jwt</artifactId>
+			<version>1.0.11.RELEASE</version>
+		</dependency>
+		<!-- <dependency> <groupId>org.springframework.security</groupId> <artifactId>spring-security-jwt</artifactId> 
+			<optional>true</optional> </dependency> -->
+		<dependency>
+			<groupId>sshtools</groupId>
+			<artifactId>j2ssh-core</artifactId>
+			<version>0.2.9</version>
+		</dependency>
+		<!-- letsencrypt java lib -->
+		<dependency>
+			<groupId>org.shredzone.acme4j</groupId>
+			<artifactId>acme4j-client</artifactId>
+			<version>0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.shredzone.acme4j</groupId>
+			<artifactId>acme4j-utils</artifactId>
+			<version>0.9</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.xmlgraphics/batik-transcoder -->
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>batik-transcoder</artifactId>
+			<version>1.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>batik-codec</artifactId>
+			<version>1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>batik-bridge</artifactId>
+			<version>1.8</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.xmlgraphics/xmlgraphics-commons -->
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>xmlgraphics-commons</artifactId>
+			<version>1.5</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.xml.parsers/jaxp-api
+		<dependency>
+			<groupId>javax.xml.parsers</groupId>
+			<artifactId>jaxp-api</artifactId>
+			<version>1.4.5</version>
+		</dependency>-->
+		<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+		<dependency>
+		    <groupId>javax.xml.bind</groupId>
+		    <artifactId>jaxb-api</artifactId>
+		    <version>2.3.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api -->
+		<dependency>
+		    <groupId>jakarta.xml.bind</groupId>
+		    <artifactId>jakarta.xml.bind-api</artifactId>
+		    <version>2.3.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.sun.xml.bind</groupId>
+		    <artifactId>jaxb-impl</artifactId>
+		    <version>2.3.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.sun.xml.bind</groupId>
+		    <artifactId>jaxb-core</artifactId>
+		    <version>2.3.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>javax.activation</groupId>
+		    <artifactId>activation</artifactId>
+		    <version>1.1.1</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.javassist</groupId>
+		    <artifactId>javassist</artifactId>
+		    <version>3.23.1-GA</version>
+		</dependency>
+
+
+				
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+<!-- 
+ -->
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-devtools</artifactId> 
+			<optional>true</optional> </dependency> <dependency> <groupId>jmagick</groupId> 
+			<artifactId>jmagick</artifactId> <version>6.3.9</version> </dependency> -->
+		<!-- logging -->
+		<dependency>
+			<groupId>com.typesafe.akka</groupId>
+			<artifactId>akka-actor_2.12</artifactId>
+			<version>${com.typesafe.akka.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.typesafe.akka</groupId>
+			<artifactId>akka-remote_2.12</artifactId>
+			<version>${com.typesafe.akka.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.typesafe.akka</groupId>
+			<artifactId>akka-cluster_2.12</artifactId>
+			<version>${com.typesafe.akka.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.typesafe.akka</groupId>
+			<artifactId>akka-cluster-metrics_2.12</artifactId>
+			<version>${com.typesafe.akka.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.typesafe.akka</groupId>
+			<artifactId>akka-cluster-tools_2.12</artifactId>
+			<version>${com.typesafe.akka.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.typesafe.akka</groupId>
+			<artifactId>akka-multi-node-testkit_2.12</artifactId>
+			<version>${com.typesafe.akka.version}</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-api</artifactId> 
+			<version>2.7</version> </dependency> <dependency> <groupId>org.apache.logging.log4j</groupId> 
+			<artifactId>log4j-core</artifactId> <version>2.7</version> </dependency> 
+			<dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-jcl</artifactId> 
+			<version>2.7</version> </dependency> -->
+<!-- 
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.28</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>2.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-web</artifactId>
+			<version>2.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-jcl</artifactId>
+			<version>2.7</version>
+		</dependency>
+ -->		
+		<!-- Async logging lib. notice the property Log4jContextSelector on program 
+			start. Put status=debug in log4j2.xml <Configuration/> to check if Async 
+			has been enabled 
+			
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+			<version>1.5.1.RELEASE</version>
+		</dependency>
+			
+			-->
+<!--  -->			
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+
+ 	<dependency>
+		<groupId>com.lmax</groupId>
+		<artifactId>disruptor</artifactId>
+		<version>3.4.2</version>
+	</dependency>
+
+		<!-- <dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-slf4j-impl</artifactId> 
+			<version>2.7</version> </dependency> -->
+
+	</dependencies>
+
+	<!-- <dependencyManagement> <dependencies> <dependency> <groupId>org.springframework.cloud</groupId> 
+		<artifactId>spring-cloud-starter-parent</artifactId> <version>Angel.SR4</version> 
+		<type>pom</type> <scope>import</scope> </dependency> </dependencies> </dependencyManagement> -->
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>src/main/resources/version.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- <plugin> <groupId>ru.yaal.maven</groupId> <artifactId>write-text-files-maven-plugin</artifactId> 
+				<version>1.1</version> <configuration> <charset>UTF-8</charset> <files> <file> 
+				<path>src/main/resources/version.properties</path> <lines> <line># Maven 
+				generated properties version file</line> <line>version=${timestamp}</line> 
+				</lines> </file> <file> <path>src/main/resources/version.json</path> <lines> 
+				<line>{</line> <line>version:${timestamp}</line> <line>}</line> </lines> 
+				</file> </files> </configuration> <executions> <execution> <id>write-text-files</id> 
+				<phase>clean</phase> <goals> <goal>write-text-files</goal> </goals> </execution> 
+				</executions> </plugin> -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!-- <configuration> <mainClass>com.royasoftware.school.MyBootSpring</mainClass> 
+					</configuration> -->
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+			<!-- mvn hibernate3:hbm2ddl -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-compiler-plugin</artifactId> 
+				<version>3.1</version> <configuration> <source>1.8</source> <target>1.8</target> 
+				</configuration> </plugin> -->
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>hibernate3-maven-plugin</artifactId> 
+				<version>3.0</version> <configuration> <namingStrategy>org.hibernate.cfg.ImprovedNamingStrategy</namingStrategy> 
+				<hibernatetool> <hbm2ddl update="true" export="false" outputfilename="update-ddl.sql" 
+				format="true" console="true"> <configuration configurationfile="hibernate.cfg.xml" 
+				/> </hbm2ddl> </hibernatetool> </configuration> <dependencies> <dependency> 
+				<groupId>org.hibernate</groupId> <artifactId>hibernate-entitymanager</artifactId> 
+				<version>3.6.10.Final</version> <exclusions> <exclusion> <groupId>javassist</groupId> 
+				<artifactId>javassist</artifactId> </exclusion> </exclusions> </dependency> 
+				<dependency> <groupId>org.javassist</groupId> <artifactId>javassist</artifactId> 
+				<version>3.18.1-GA</version> </dependency> </dependencies> </plugin> -->
+		</plugins>
+
+		<finalName>${project.artifactId}-${appversion}</finalName>
+
+	</build>
+
+	<!-- Add Spring repositories -->
+	<!-- (you don't need this if you are using a .RELEASE version) -->
+
+	<!-- Remove above repositories if using RELEASE version -->
+	<!-- (you don't need this if you are using a .RELEASE version) -->
+
+</project>
+<!-- Package: mvn package Run: mvn spring-boot:run -->

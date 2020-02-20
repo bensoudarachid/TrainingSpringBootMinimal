@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: schoolbe
+spec:
+  selector:
+    app: school
+    tier: backend
+  ports:
+    - protocol: "TCP"
+      nodePort: 31133
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: schoolbe
+spec:
+  replicas: 1
+  minReadySeconds: 5
+  selector:
+    matchLabels:
+      app: school
+  strategy:
+    # indicate which strategy we want for rolling update
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: school
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: schoolbectn
+          image: royasoftware/trainingbackend:v1.0.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MYSQL_HOST
+              value: 192.168.2.101
+            - name: TRAINING_APP_STORAGE
+              value: /deployments/data/trainingappstorage
+          volumeMounts:
+            - mountPath: "/deployments/data/trainingappstorage"
+              name: schoolbepd
+      volumes:
+        - name: schoolbepd
+          persistentVolumeClaim:
+            claimName: schoolpvc-1
