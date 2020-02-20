@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.royasoftware.school.cluster.AkkaSystemStarter;
 
 /**
  * <p>
