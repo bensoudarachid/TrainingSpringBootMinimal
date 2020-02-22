@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.royasoftware.school.cluster.SpringExtension;
+//import com.royasoftware.school.cluster.SpringExtension;
 import com.royasoftware.school.model.Training;
 //import com.royasoftware.school.repository.TrainingRepositoryImpl;
 //import com.royasoftware.school.repository.TrainingRepository;
 import com.royasoftware.school.repository.TrainingRepository;
 
-import akka.actor.ActorSystem;
+//import akka.actor.ActorSystem;
 /**
  * Manage the data from database from Role table user
  */
@@ -33,11 +33,11 @@ public class TrainingServiceBean implements TrainingService {
 //	private TrainingRepository trainingRepository;
 	@Autowired(required = false)
 	private TrainingRepository trainingRepository;
-	@Autowired
-	private SpringExtension springExtension;
+//	@Autowired
+//	private SpringExtension springExtension;
 
-	@Autowired(required = false)
-	private ActorSystem system;
+//	@Autowired(required = false)
+//	private ActorSystem system;
 	/**
 	 * Get by id
 	 * 

@@ -134,6 +134,8 @@ public class BaseController {
 	
 	@ExceptionHandler({ Exception.class })
 	public final ResponseEntity<ErrorInfo> handleException(Exception ex, HttpServletRequest request) {
+		System.out.println("Exception handler. Here is the general exception handler." + ex.getClass().getName() + ". message="
+				+ getMessage(ex));
 		Throwable e = ex;
 		ErrorInfo response = new ErrorInfo();
 		response.setUrl(request.getRequestURL().toString());
@@ -152,6 +154,8 @@ public class BaseController {
 	@ExceptionHandler({ ValidationException.class })
 	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 	public final @ResponseBody ErrorInfo handleException(HttpServletRequest request, Exception ex) {
+		System.out.println("ValidationException handler. Here is the general exception handler." + ex.getClass().getName() + ". message="
+				+ getMessage(ex));
 		Throwable e = ex;
 		ErrorInfo response = new ErrorInfo();
 		response.setUrl(request.getRequestURL().toString());

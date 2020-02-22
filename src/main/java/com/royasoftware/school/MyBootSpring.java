@@ -54,8 +54,7 @@ import com.royasoftware.school.script.ScriptHelper;
 @EnableRabbit
 @EnableScheduling
 // @ComponentScan(basePackages = { "com.royasoftware" })
-@PropertySource(ignoreResourceNotFound = false, value = { "classpath:application.properties",
-		"classpath:mainakkaserver.properties" })
+@PropertySource(ignoreResourceNotFound = false, value = { "classpath:application.properties" })
 
 public class MyBootSpring extends SpringBootServletInitializer implements SchedulingConfigurer { // ,RabbitListenerConfigurer
 //	private static Logger logger = LoggerFactory.getLogger(MyBootSpring.class);

@@ -63,7 +63,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
 
 import com.royasoftware.school.TenantContext;
-import com.royasoftware.school.cluster.SpringExtension;
+//import com.royasoftware.school.cluster.SpringExtension;
 import com.royasoftware.school.exception.ValidationException;
 import com.royasoftware.school.model.Account;
 import com.royasoftware.school.model.Training;
@@ -78,8 +78,8 @@ import com.royasoftware.school.settings.security.CustomUserDetails;
 public class TrainingController extends BaseController {
 	// @Autowired
 	// private ActorSystem actorSystem;
-	@Autowired
-	private SpringExtension springExtension;
+//	@Autowired
+//	private SpringExtension springExtension;
 
 	@Autowired
 	private TrainingService trainingService;

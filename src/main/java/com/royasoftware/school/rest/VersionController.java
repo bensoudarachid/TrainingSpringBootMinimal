@@ -63,7 +63,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
 
 import com.royasoftware.school.TenantContext;
-import com.royasoftware.school.cluster.SpringExtension;
+//import com.royasoftware.school.cluster.SpringExtension;
 import com.royasoftware.school.exception.ValidationException;
 import com.royasoftware.school.model.Account;
 import com.royasoftware.school.model.Training;

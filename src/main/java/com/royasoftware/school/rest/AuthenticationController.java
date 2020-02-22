@@ -4,7 +4,6 @@ import com.royasoftware.school.model.Account;
 import com.royasoftware.school.service.AccountService;
 import com.royasoftware.school.service.RoleService;
 import com.royasoftware.school.settings.school.email.SmtpMailSender;
-import com.royasoftware.school.settings.school.errors.InvalidRequestException;
 import com.royasoftware.school.tools.EmailValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
