@@ -55,6 +55,7 @@ public class AccountAuthenticationProvider extends AbstractUserDetailsAuthentica
 
     @Override
     protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken token) throws AuthenticationException {
+    	logger.info("retrieveUser username="+username);
 //		//Simulate delay of a real network connection to see the animation on front end 
 		try {
 			Thread.sleep(800);

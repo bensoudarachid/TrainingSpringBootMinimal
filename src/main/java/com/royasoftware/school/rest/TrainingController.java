@@ -233,6 +233,7 @@ public class TrainingController extends BaseController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/trainings/{_param}")
 	public ResponseEntity<Collection<Training>> getTrainingsGet(@PathVariable String _param) throws Exception {
+		logger.info("getTrainingsGet");
 		Account acc = accountService.findByUsername("admin");
 		CustomUserDetails activeUser = TenantContext.getCurrentUser();
 		rdmTimeRdmSuccess();

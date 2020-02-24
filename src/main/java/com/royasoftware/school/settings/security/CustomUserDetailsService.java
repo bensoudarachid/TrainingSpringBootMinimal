@@ -6,6 +6,8 @@ import com.royasoftware.school.model.Account;
 import com.royasoftware.school.model.Role;
 import com.royasoftware.school.repository.AccountRepository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -23,6 +25,7 @@ import java.util.Collection;
 public class CustomUserDetailsService implements UserDetailsService {
 
 //    private final AccountRepository userRepository;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired(required = false)
     private AccountRepository userRepository;
@@ -39,6 +42,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    	logger.info("loadUserByUsername username="+username);
 
         Account account = userRepository.findByUsername(username);
 

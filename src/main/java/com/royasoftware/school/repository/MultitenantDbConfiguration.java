@@ -72,7 +72,8 @@ public class MultitenantDbConfiguration {
 				else
 					flyway.setDataSource("jdbc:mysql://" + System.getenv("MYSQL_HOST") + ":3306/" + tenantId
 							+ "?autoReconnect=true&useSSL=false", "root", "1qay2wsx");
-				flyway.setLocations(tenantProperties.getProperty("flyway.locations"));
+//				flyway.setLocations(tenantProperties.getProperty("flyway.locations"));
+				flyway.setLocations("classpath:/db/migration/tenants");
 				// !!!!IMPORTANT!!!!! Repair dbs.
 				try {
 					flyway.repair();
@@ -105,24 +106,132 @@ public class MultitenantDbConfiguration {
 				resolvedDataSources.put(tenantId, ds);
 			} catch (IOException e) {
 				logger.info("IGNORE. tenantId: " + tenantId);
-				e.printStackTrace();
-			}
-		}
-
-		TenantContext.setValidTenants(resolvedDataSources.keySet());
-		// Create the final multi-tenant source.
-		// It needs a default database to connect to.
-		// Make sure that the default database is actually an empty tenant
-		// database.
-		// Don't use that for a regular tenant if you want things to be safe!
-		MultitenantDataSource dataSource = new MultitenantDataSource();
-		dataSource.setDefaultTargetDataSource(defaultDataSource());
-		dataSource.setTargetDataSources(resolvedDataSources);
-		// Call this to finalize the initialization of the data source.
-		dataSource.afterPropertiesSet();
-
-		return dataSource;
-	}
+	 e.printStackTrace();
+	 }
+	 }
+	
+	 TenantContext.setValidTenants(resolvedDataSources.keySet());
+	 // Create the final multi-tenant source.
+	 // It needs a default database to connect to.
+	 // Make sure that the default database is actually an empty tenant
+	 // database.
+	 // Don't use that for a regular tenant if you want things to be safe!
+	 MultitenantDataSource dataSource = new MultitenantDataSource();
+	 dataSource.setDefaultTargetDataSource(defaultDataSource());
+	 dataSource.setTargetDataSources(resolvedDataSources);
+	 // Call this to finalize the initialization of the data source.
+	 dataSource.afterPropertiesSet();
+	
+	 return dataSource;
+	 }
+//	@Bean
+//	// @ Configuration Properties(prefixx = "db.datasource")
+//	@ConfigurationProperties("spring.datasource")
+//	public MultitenantDataSource dataSource() throws Exception {
+//		String pathString = "db/datasource/tenants";
+//		ClassLoader cl = this.getClass().getClassLoader();
+//		ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(cl);
+//		Resource[] resources = resolver.getResources("classpath*:" + pathString + "/*.properties");
+//		Flyway flyway;
+//		Map<Object, Object> resolvedDataSources = new HashMap<>();
+//
+//		// !!!!IMPORTANT!!!!! Repair default db.
+//		flyway = new Flyway();
+//		flyway.setDataSource(properties.getUrl(), properties.getUsername(), properties.getPassword());
+//		flyway.setLocations("db.migration");
+//		flyway.repair();
+//		DataSource ds = null;
+//		String tenantId = null;
+//		for (Resource propertyFile : resources) {
+//			Properties tenantProperties = new Properties();
+//			tenantProperties.load(propertyFile.getInputStream());
+//			tenantId = tenantProperties.getProperty("name");
+//			// ds = getDataSourceItem( propertyFile);
+//			// DataSourceBuilder dataSourceBuilder = new
+//			// DataSourceBuilder(this.getClass().getClassLoader());
+//			DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+//			try {
+//				ds = getDataSourceItem(tenantProperties, tenantId);
+//				if (ds != null)
+//					resolvedDataSources.put(tenantId, ds);
+//			} catch (Exception e) {
+//				logger.info("IGNORE. tenantId: " + tenantId);
+//				e.printStackTrace();
+//			}
+//		}
+//
+//		TenantContext.setValidTenants(resolvedDataSources.keySet());
+//		// Create the final multi-tenant source.
+//		// It needs a default database to connect to.
+//		// Make sure that the default database is actually an empty tenant
+//		// database.
+//		// Don't use that for a regular tenant if you want things to be safe!
+//		MultitenantDataSource dataSource = new MultitenantDataSource();
+//		dataSource.setDefaultTargetDataSource(defaultDataSource());
+//		dataSource.setTargetDataSources(resolvedDataSources);
+//		// Call this to finalize the initialization of the data source.
+//		dataSource.afterPropertiesSet();
+//
+//		return dataSource;
+//	}
+//
+//	private DataSource getDataSourceItem(Properties tenantProperties, String tenantId) {
+//		// DataSourceBuilder dataSourceBuilder = new
+//		// DataSourceBuilder(this.getClass().getClassLoader());
+//		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+//		// String tenantId = null;
+//		Flyway flyway = new Flyway();
+//		DataSource ds = null;
+//
+//		try {
+//			// tenantId = tenantProperties.getProperty("name");
+//			flyway = new Flyway();
+//			if (tenantProperties.getProperty("datasource.url") != null)
+//				flyway.setDataSource(resolveEnvVars(tenantProperties.getProperty("datasource.url")),
+//						tenantProperties.getProperty("datasource.username"), tenantProperties.getProperty("datasource.password"));
+//			else
+//				flyway.setDataSource(
+//						"jdbc:mysql://" + System.getenv("MYSQL_HOST") + ":3306/" + tenantId + "?autoReconnect=true&useSSL=false",
+//						"root", "1qay2wsx");
+//			flyway.setLocations(tenantProperties.getProperty("flyway.locations"));
+//			// !!!!IMPORTANT!!!!! Repair dbs.
+//			try {
+//				flyway.repair();
+//				flyway.migrate();
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				logger.info("Break migration for tenantId: " + tenantId + ", e=" + e.getMessage());
+//				return null;
+//			}
+//
+//			if (tenantProperties.getProperty("datasource.url") != null)
+//				dataSourceBuilder
+//						.driverClassName(tenantProperties.getProperty("datasource.driver") != null
+//								? tenantProperties.getProperty("datasource.driver")
+//								: properties.getDriverClassName())
+//						.url(resolveEnvVars(tenantProperties.getProperty("datasource.url")))
+//						.username(tenantProperties.getProperty("datasource.username"))
+//						.password(tenantProperties.getProperty("datasource.password"));
+//			else
+//				dataSourceBuilder.driverClassName(properties.getDriverClassName())
+//						.url("jdbc:mysql://" + System.getenv("MYSQL_HOST") + ":3306/" + tenantId
+//								+ "?autoReconnect=true&useSSL=false") // autoReconnect=true&
+//						.username("root").password("1qay2wsx");
+//
+//			// logger.info("------->properties.getType()="+properties.getType());
+//			if (properties.getType() != null) {
+//				dataSourceBuilder.type(properties.getType());
+//			}
+//			ds = dataSourceBuilder.build();
+//			setDataSourcePoolProps(ds);
+//			return ds;
+//		} catch (Exception e) {
+//			logger.info("IGNORE. tenantId: " + tenantId);
+//			e.printStackTrace();
+//			return null;
+//		}
+//
+//	}
 
 	private String resolveEnvVars(String input) {
 		if (null == input) {
@@ -147,10 +256,11 @@ public class MultitenantDbConfiguration {
 	 * @return
 	 */
 	private DataSource defaultDataSource() {
-//		DataSourceBuilder dataSourceBuilder = new DataSourceBuilder(this.getClass().getClassLoader())
-		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();				
+		// DataSourceBuilder dataSourceBuilder = new
+		// DataSourceBuilder(this.getClass().getClassLoader())
+		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
 		dataSourceBuilder.driverClassName(properties.getDriverClassName()).url(properties.getUrl())
-		.username(properties.getUsername()).password(properties.getPassword());
+				.username(properties.getUsername()).password(properties.getPassword());
 		// logger.info("------->properties.getType()
 		// default="+properties.getType());
 		if (properties.getType() != null) {
@@ -166,11 +276,11 @@ public class MultitenantDbConfiguration {
 		((org.apache.tomcat.jdbc.pool.DataSource) ds).setMaxIdle(20);
 		((org.apache.tomcat.jdbc.pool.DataSource) ds).setTimeBetweenEvictionRunsMillis(20000);
 		((org.apache.tomcat.jdbc.pool.DataSource) ds).setMinEvictableIdleTimeMillis(43000);
-//Those next 2 help remove abandonned connections. Useful when using spring-devtools 		
+		// Those next 2 help remove abandonned connections. Useful when using
+		// spring-devtools
 		((org.apache.tomcat.jdbc.pool.DataSource) ds).setRemoveAbandoned(true);
-		((org.apache.tomcat.jdbc.pool.DataSource) ds).setRemoveAbandonedTimeout(50);//seconds
+		((org.apache.tomcat.jdbc.pool.DataSource) ds).setRemoveAbandonedTimeout(50);// seconds
 
-		
 		((org.apache.tomcat.jdbc.pool.DataSource) ds).setValidationInterval(20000);
 		((org.apache.tomcat.jdbc.pool.DataSource) ds).setTestOnBorrow(true);
 		((org.apache.tomcat.jdbc.pool.DataSource) ds).setTestWhileIdle(true);
