@@ -9,25 +9,22 @@ import java.awt.RenderingHints;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Properties;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -45,13 +42,13 @@ import org.apache.batik.util.XMLResourceDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,9 +56,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.royasoftware.school.TenantContext;
 //import com.royasoftware.school.cluster.SpringExtension;
 import com.royasoftware.school.exception.ValidationException;
@@ -88,7 +88,7 @@ public class TrainingController extends BaseController {
 	private AccountService accountService;
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-
+	private Random random = new Random(10000);
 	// @RequestMapping(method = RequestMethod.GET, value =
 	// "/version/{_versionNr}")
 	// public ResponseEntity<String> getVersion(@PathVariable String _versionNr)
@@ -412,4 +412,47 @@ public class TrainingController extends BaseController {
 		}
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/crypto/{_currency}")
+	public BigDecimal getCryptoRate(@PathVariable String _currency) {
+//		logger.info("getCryptoRate");
+		String curr = "BTC";
+		if( _currency != null) curr = _currency;
+//		System.out.println("_currency="+curr);
+		RestTemplate restTemplate = new RestTemplate();
+		String serviceUrl = "https://cex.io/api/last_price/"+ curr +"/EUR" ;
+//		System.out.println("serviceUrl="+serviceUrl);
+		
+		HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        
+//		ResponseEntity<String> response = restTemplate.getForEntity(serviceUrl, String.class);
+		ResponseEntity<String> response = restTemplate.exchange(serviceUrl, HttpMethod.GET,entity,String.class);
+//		System.out.println("response="+response);
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode cryptoPath = null;
+		BigDecimal cryptoRate = null;
+		try {
+			JsonNode root = mapper.readTree(response.getBody());
+//			System.out.println("root="+root);
+			cryptoPath = root.path("lprice");
+//			System.out.println("cryptoPath="+cryptoPath);
+//			System.out.println("crypto rate ="+cryptoPath.asText());
+			return new BigDecimal(cryptoPath.asText());
+			
+//			logger.info("newRandom(10000).toString()="+(random.nextInt(10000) & Integer.MAX_VALUE));
+//			return new BigDecimal( random.nextInt(10000)& Integer.MAX_VALUE );
+//			cryptoRate = cryptoPath.asText();
+//			System.out.println("cryptoRate="+cryptoRate);
+//			return cryptoRate;
+		} catch (Exception e) {
+		}
+		return new BigDecimal(-1);
+//		if (curRate == null)
+//			curRate = curRatePath.decimalValue();
+//		curToGbpRate = gbpRate != null && curRate != null ? gbpRate.divide(curRate, 4, RoundingMode.HALF_EVEN) : null;
+//		return curToGbpRate;
+	}
+	
 }
