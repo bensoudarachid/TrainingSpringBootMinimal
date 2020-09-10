@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 
 
@@ -62,7 +63,8 @@ public class OAuth2ServerConfiguration {
                     .and()
                     .formLogin()
                     .loginPage("/login")
-                    .failureUrl("/login?error=1")
+//                    .failureUrl("/login?error=1")
+                    .failureHandler(authenticationFailureHandler())
                     .permitAll()
                     .and()
                     .logout()
@@ -120,7 +122,8 @@ public class OAuth2ServerConfiguration {
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
             // @formatter:off
-            clients .jdbc(dataSource)
+            clients 
+            		.jdbc(dataSource)
 //            		.inMemory()
 //                    .withClient("clientapp")
 //                    .authorizedGrantTypes("password","refresh_token")
@@ -128,6 +131,7 @@ public class OAuth2ServerConfiguration {
 //                    .scopes("read", "write")
 //                    .resourceIds(RESOURCE_ID)
 //                    .secret("123456")
+            		
             ;
             // @formatter:on
         }
@@ -142,6 +146,10 @@ public class OAuth2ServerConfiguration {
     public JdbcTokenStore tokenStore() {
         return new JdbcTokenStore(dataSource);
     }    
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new CustomAuthenticationFailureHandler();
+    }
     
 //    @Bean
 //    @Primary

@@ -36,26 +36,32 @@ public class AccountAuthenticationProvider extends AbstractUserDetailsAuthentica
     @Autowired(required = false)
     private PasswordEncoder passwordEncoder;
 
+    public AccountAuthenticationProvider(){
+    	logger.info("init AccountAuthenticationProvider");
+    }
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken token) throws AuthenticationException {
     	logger.info("> additionalAuthenticationChecks");
+    	
+    	System.out.println("AccountAuthenticationProvider > additionalAuthenticationChecks");
 
         if (token.getCredentials() == null || userDetails.getPassword() == null) {
             throw new BadCredentialsException("Credentials may not be null.");
         }
-//		logger.info("token.getCredentials()="+token.getCredentials()); 
-//		logger.info("userDetails.getPassword()="+userDetails.getPassword()); 
+		logger.info("token.getCredentials()="+token.getCredentials()); 
+		logger.info("userDetails.getPassword()="+userDetails.getPassword()); 
 
         if (!passwordEncoder.matches((String) token.getCredentials(), userDetails.getPassword())) {
             throw new BadCredentialsException("Invalid credentials.");
         }
-     
+
         logger.info("< additionalAuthenticationChecks");
     }
 
     @Override
     protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken token) throws AuthenticationException {
     	logger.info("retrieveUser username="+username);
+    	System.out.println("AccountAuthenticationProvider retrieveUser username="+username);
 //		//Simulate delay of a real network connection to see the animation on front end 
 		try {
 			Thread.sleep(800);

@@ -32,6 +32,7 @@ public class RoleServiceBean implements RoleService{
     @Override
     public Role findById(Long id) {
         Optional<Role> role = roleRepository.findById(id);
+        System.out.println("Role service bean. findByid");
         return role.get();
     }
 

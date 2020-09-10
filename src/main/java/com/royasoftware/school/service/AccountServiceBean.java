@@ -57,6 +57,8 @@ public class AccountServiceBean implements AccountService {
     @Override
     public Account findByUsername(String username) {
         Account account = accountRepository.findByUsername(username);
+        System.out.println("Accountservicebean. findByUsername");
+        logger.info("Accountservicebean. findByUsername");
         return account;
     }
 
@@ -68,6 +70,8 @@ public class AccountServiceBean implements AccountService {
     @Override
     public Account findByUserid(Long userid) {
         Account account = accountRepository.findByUserid(userid);
+        System.out.println("Accountservicebean. findByUserid");
+        System.out.println("Accountservicebean. findByUserid");
         return account;
     }
 

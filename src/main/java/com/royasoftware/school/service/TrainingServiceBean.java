@@ -60,22 +60,25 @@ public class TrainingServiceBean implements TrainingService {
 
 	@Override
 	public Collection<Training> findAll() {
-//		logger.info("find all trainings");
+		logger.debug("find all trainings");
 		return trainingRepository.findAll();
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public Training saveTraining(Training training) {
 		logger.info("repo save Training ="+training);
 		return trainingRepository.save(training);
 	}
 
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Transactional(readOnly = false)
 	public Training updateTraining(Training training){
 		logger.info("repo updateTraining ="+training);
 		return trainingRepository.save(training);
 	}
 
+	@Transactional(readOnly = false)
 	public void deleteTraining(Training trainingParam){
 		trainingRepository.delete(trainingParam);
 	}

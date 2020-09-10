@@ -49,6 +49,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -233,9 +234,13 @@ public class TrainingController extends BaseController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/trainings/{_param}")
 	public ResponseEntity<Collection<Training>> getTrainingsGet(@PathVariable String _param) throws Exception {
-		logger.info("getTrainingsGet");
+//		logger.info("getTrainingsGet");
 		Account acc = accountService.findByUsername("admin");
+//		logger.info("admin acc pass="+acc.getPassword());
+//		logger.info("jefaistout encryption = "+new BCryptPasswordEncoder().encode("jefaistout"));
+//		logger.info("123456 encryption = "+new BCryptPasswordEncoder().encode("123456"));
 		CustomUserDetails activeUser = TenantContext.getCurrentUser();
+//		logger.info("activeUser"+activeUser);
 		rdmTimeRdmSuccess();
 		// ActorSelection trainingServFrEndActor =
 		// actorSystem.actorSelection("/user/trainingServFrEndActor");
@@ -293,10 +298,11 @@ public class TrainingController extends BaseController {
 	@RequestMapping(method = RequestMethod.GET, produces = { MediaType.IMAGE_PNG_VALUE }, value = "/training/img/{_param}")
 	public ResponseEntity<Object> getTrainingImage(@PathVariable Long _param, @RequestParam("width") Integer width,
 			@RequestParam("height") Integer height) throws Exception {
-//		logger.info("getTrainingImage id : "+_param);
+		logger.debug("getTrainingImage id is "+_param+ " width: {}, height {}",width, height);
 		width = width > 200 ? 200 : width;
 		height = height > 200 ? 200 : height;
 
+		
 		rdmTimeRdmSuccess();
 
 		File dir = new File(TenantContext.getCurrentTenantStoragePath("trainings"));
