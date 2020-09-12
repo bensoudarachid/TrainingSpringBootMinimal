@@ -242,6 +242,7 @@ public class TrainingController extends BaseController {
 		CustomUserDetails activeUser = TenantContext.getCurrentUser();
 //		logger.info("activeUser"+activeUser);
 		rdmTimeRdmSuccess();
+		
 		// ActorSelection trainingServFrEndActor =
 		// actorSystem.actorSelection("/user/trainingServFrEndActor");
 		// Timeout timeout = new Timeout(Duration.create(5, "seconds"));
