@@ -242,6 +242,7 @@ public class TrainingController extends BaseController {
 		CustomUserDetails activeUser = TenantContext.getCurrentUser();
 //		logger.info("activeUser"+activeUser);
 		
+		
 		rdmTimeRdmSuccess();
 		
 		// ActorSelection trainingServFrEndActor =
