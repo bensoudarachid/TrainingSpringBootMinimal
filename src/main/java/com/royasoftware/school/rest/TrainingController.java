@@ -241,6 +241,7 @@ public class TrainingController extends BaseController {
 //		logger.info("123456 encryption = "+new BCryptPasswordEncoder().encode("123456"));
 		CustomUserDetails activeUser = TenantContext.getCurrentUser();
 //		logger.info("activeUser"+activeUser);
+		
 		rdmTimeRdmSuccess();
 		
 		// ActorSelection trainingServFrEndActor =
