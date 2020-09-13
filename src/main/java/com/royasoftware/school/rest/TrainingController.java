@@ -243,6 +243,7 @@ public class TrainingController extends BaseController {
 //		logger.info("activeUser"+activeUser);
 		
 		
+		
 		rdmTimeRdmSuccess();
 		
 		// ActorSelection trainingServFrEndActor =
