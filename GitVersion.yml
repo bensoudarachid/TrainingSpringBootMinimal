@@ -1,0 +1,7 @@
+mode: ContinuousDeployment
+assembly-versioning-scheme: MajorMinorPatch
+continuous-delivery-fallback-tag: ''
+branches: {}
+ignore:
+  sha: []
+merge-message-formats: {}
