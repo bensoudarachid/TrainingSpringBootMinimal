@@ -24,6 +24,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -57,8 +59,8 @@ import com.royasoftware.school.script.ScriptHelper;
 @PropertySource(ignoreResourceNotFound = false, value = { "classpath:application.properties" })
 
 public class MyBootSpring extends SpringBootServletInitializer implements SchedulingConfigurer { // ,RabbitListenerConfigurer
-//	private static Logger logger = LoggerFactory.getLogger(MyBootSpring.class);
-
+	private static Logger logger = LoggerFactory.getLogger(MyBootSpring.class);
+    
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(MyBootSpring.class);
@@ -140,7 +142,7 @@ public class MyBootSpring extends SpringBootServletInitializer implements Schedu
 		}
 
 	}
-
+	
 	public static void main(String[] args) {
 		
 //	    String fontConfig = System.getProperty("java.home")
@@ -155,14 +157,16 @@ public class MyBootSpring extends SpringBootServletInitializer implements Schedu
 		// AkkaSystemStarter.main(new String[0]);
 		// });
 		// t.start();
+		
+		
 		Properties props = System.getProperties();
 		// System property is needed for the async disruptor logger.
 		props.setProperty("Log4jContextSelector", "org.apache.logging.log4j.core.async.AsyncLoggerContextSelector");
 
 		writeDemoDataToUserStorage("demo1");
 		writeDemoDataToUserStorage("demo2");
+		logger.info("Before starting app, Database connection is : " + System.getenv("MYSQL_HOST") );
 //		writeDemoDataToUserStorage("abbaslearn");
-
 		ApplicationContext ctx = SpringApplication.run(MyBootSpring.class, args);
 		// ActorSystem actorSystem = ctx.getBean(ActorSystem.class);
 		// SpringExtension springExtension = ctx.getBean(SpringExtension.class);
