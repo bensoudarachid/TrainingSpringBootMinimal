@@ -1,6 +1,6 @@
 package com.royasoftware.school.model;
 
-import org.hibernate.validator.constraints.NotBlank;
+//import org.hibernate.validator.constraints.NotBlank;
 
 import com.royasoftware.school.settings.validators.UniqueUsername;
 

@@ -27,6 +27,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.version }}"
           command:
             - "java"
+            - "--add-exports=java.naming/com.sun.jndi.ldap=ALL-UNNAMED"
             - "-jar"
             - "/training.jar"
           ports:

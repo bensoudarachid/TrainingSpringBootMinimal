@@ -165,7 +165,7 @@ public class MyBootSpring extends SpringBootServletInitializer implements Schedu
 
 		writeDemoDataToUserStorage("demo1");
 		writeDemoDataToUserStorage("demo2");
-		logger.info("Before starting app, Database connection is : " + System.getenv("MYSQL_HOST") );
+		logger.info("2.Before starting app, Database connection is : " + System.getenv("MYSQL_HOST") );
 //		writeDemoDataToUserStorage("abbaslearn");
 		ApplicationContext ctx = SpringApplication.run(MyBootSpring.class, args);
 		// ActorSystem actorSystem = ctx.getBean(ActorSystem.class);
@@ -173,7 +173,7 @@ public class MyBootSpring extends SpringBootServletInitializer implements Schedu
 		// actorSystem.actorOf(springExtension.props("TrainingServFrEndActor"),
 		// "trainingServFrEndActor");
 
-		ScriptHelper.run(ScriptHelper.RUN_TEMP2);
+//		ScriptHelper.run(ScriptHelper.RUN_TEMP2);
 
 //		logger.info("Spring Boot Server started");
 
