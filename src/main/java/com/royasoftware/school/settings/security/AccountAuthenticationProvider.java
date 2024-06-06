@@ -64,7 +64,7 @@ public class AccountAuthenticationProvider extends AbstractUserDetailsAuthentica
     	System.out.println("AccountAuthenticationProvider retrieveUser username="+username);
 //		//Simulate delay of a real network connection to see the animation on front end 
 		try {
-			Thread.sleep(800);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

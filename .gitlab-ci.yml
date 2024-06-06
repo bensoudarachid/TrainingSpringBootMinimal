@@ -5,7 +5,7 @@ stages:
 build-code-job:
   stage: build
   script:
-    - echo "Check the ruby version, then build project files:"
+    - echo "Check the ruby version, then build project files"
 
 test-code-job1:
   stage: test

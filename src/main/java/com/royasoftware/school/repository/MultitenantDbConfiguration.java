@@ -73,7 +73,7 @@ public class MultitenantDbConfiguration {
 //					flyway.setDataSource("jdbc:mysql://" + System.getenv("MYSQL_HOST") + ":3306/" + tenantId
 //							+ "?autoReconnect=true&useSSL=false", "root", "1qay2wsx");
 				flyway.setDataSource("jdbc:mysql://" + System.getenv("MYSQL_HOST") + "/" + tenantId
-						+ "?autoReconnect=true&useSSL=false", "root", "1qay2wsx");
+						+ "?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false", "root", "1qay2wsx3edc");
 //				flyway.setLocations(tenantProperties.getProperty("flyway.locations"));
 				flyway.setLocations("classpath:/db/migration/tenants");
 				// !!!!IMPORTANT!!!!! Repair dbs.
@@ -98,8 +98,8 @@ public class MultitenantDbConfiguration {
 //					.url("jdbc:mysql://" + System.getenv("MYSQL_HOST") + ":3306/" + tenantId
 //							+ "?autoReconnect=true&useSSL=false") // autoReconnect=true&
 					.url("jdbc:mysql://" + System.getenv("MYSQL_HOST") + "/" + tenantId
-							+ "?autoReconnect=true&useSSL=false") // autoReconnect=true&
-							.username("root").password("1qay2wsx");
+							+ "?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false") // autoReconnect=true&
+							.username("root").password("1qay2wsx3edc");
 
 				// logger.info("------->properties.getType()="+properties.getType());
 				if (properties.getType() != null) {

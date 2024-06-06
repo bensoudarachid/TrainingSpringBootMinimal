@@ -1,5 +1,7 @@
 package com.royasoftware.school.settings.security;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +35,10 @@ public class CustomTokenEnhancer implements TokenEnhancer {
 		}
 
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
+        Calendar calendar = Calendar.getInstance(); // gets a calendar using the default time zone and locale.
+        calendar.add(Calendar.SECOND, 10);
+//        System.out.println(calendar.getTime());
+        ((DefaultOAuth2AccessToken) accessToken).setExpiration(new Date(calendar.getTimeInMillis()));
         return accessToken;
     }
 }

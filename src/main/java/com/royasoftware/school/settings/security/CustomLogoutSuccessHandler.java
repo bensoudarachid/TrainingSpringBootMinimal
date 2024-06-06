@@ -61,7 +61,7 @@ public class CustomLogoutSuccessHandler
             if (oAuth2AccessToken != null) {
                 tokenStore.removeAccessToken(oAuth2AccessToken);
                 oAuth2AccessToken = tokenStore.readAccessToken(token.split(" ")[1].trim());
-                System.out.println("after removing oAuth2AccessToken = "+oAuth2AccessToken);
+                System.out.println("after removing oAuth2AccessToken (should be null now) = "+oAuth2AccessToken);
             }
         }else{
             System.out.println("wrong token = "+token);
