@@ -36,7 +36,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
 
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
         Calendar calendar = Calendar.getInstance(); // gets a calendar using the default time zone and locale.
-        calendar.add(Calendar.SECOND, 10);
+        calendar.add(Calendar.SECOND, 300);
 //        System.out.println(calendar.getTime());
         ((DefaultOAuth2AccessToken) accessToken).setExpiration(new Date(calendar.getTimeInMillis()));
         return accessToken;

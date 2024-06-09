@@ -63,11 +63,11 @@ public class AccountAuthenticationProvider extends AbstractUserDetailsAuthentica
     	logger.info("retrieveUser username="+username);
     	System.out.println("AccountAuthenticationProvider retrieveUser username="+username);
 //		//Simulate delay of a real network connection to see the animation on front end 
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(2000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 //    	Uninterruptibles.sleepUninterruptibly(2000, TimeUnit.MILLISECONDS);
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 

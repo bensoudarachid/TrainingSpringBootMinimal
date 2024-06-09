@@ -22,14 +22,17 @@ public class AppControllerInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		logger.debug("AppControllerInterceptor: go");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null && authentication.getPrincipal() instanceof String
 				&& authentication.getPrincipal().equals("anonymousUser")) {
+			logger.debug("current user: null");	
 			TenantContext.setCurrentUser(null);
 		} else {
 			CustomUserDetails activeUser = (CustomUserDetails) (authentication == null ? null
 					: authentication.getPrincipal());
 			TenantContext.setCurrentUser(activeUser);
+			logger.debug("current user: "+activeUser.getUsername());
 		}
 		return super.preHandle(request, response, handler);
 	}
