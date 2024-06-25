@@ -226,13 +226,13 @@ public class TrainingController extends BaseController {
 		rdmTimeRdmSuccess();
 		return ResponseEntity.status(HttpStatus.OK).body(null);
 	}
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/trainings/{_param}")
 	public ResponseEntity<Collection<Training>> getTrainingsPost(@PathVariable String _param) throws Exception {
 		logger.info("POST. getTrainingsGet");
 		return getTrainingsGet(_param);
 	}
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/trainings/{_param}")
 	public ResponseEntity<Collection<Training>> getTrainingsGet(@PathVariable String _param) throws Exception {
 		logger.info("GET. getTrainingsGet");
